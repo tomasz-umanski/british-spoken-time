@@ -66,4 +66,53 @@ class BritishSpokenTimeConverterTest {
 
     }
 
+    @Nested
+    @DisplayName("Past hour conversion")
+    class PastHourConversion {
+
+        @Test
+        @DisplayName("Should convert quarter past four")
+        void shouldConvertQuarterPastFour() {
+            Time time = new Time(4, 15);
+            assertEquals("quarter past four", converter.convert(time));
+        }
+
+        @Test
+        @DisplayName("Should convert half past seven")
+        void shouldConvertHalfPastSeven() {
+            Time time = new Time(7, 30);
+            assertEquals("half past seven", converter.convert(time));
+        }
+
+        @Test
+        @DisplayName("Should convert one past midnight")
+        void shouldConvertOnePastMidnight() {
+            Time time = new Time(0, 1);
+            assertEquals("one past midnight", converter.convert(time));
+        }
+
+        @Test
+        @DisplayName("Should convert eleven past noon")
+        void shouldConvertElevenPastNoon() {
+            Time time = new Time(12, 11);
+            assertEquals("eleven past noon", converter.convert(time));
+        }
+
+        @ParameterizedTest
+        @CsvSource({
+                "1, 3, three past one",
+                "2, 5, five past two",
+                "3, 10, ten past three",
+                "5, 20, twenty past five",
+                "6, 25, twenty five past six",
+                "7, 29, twenty nine past seven",
+        })
+        @DisplayName("Should convert time to past format")
+        void shouldConvertTimeToPastFormat(int hour, int minute, String expected) {
+            Time time = new Time(hour, minute);
+            assertEquals(expected, converter.convert(time));
+        }
+
+    }
+
 }

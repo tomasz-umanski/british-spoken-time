@@ -21,6 +21,13 @@ public record Time(int hour, int minute) {
     }
 
     /**
+     * Determines if this time represents an exact hour (no minutes).
+     */
+    public boolean isExactHour() {
+        return minute == 0;
+    }
+
+    /**
      * Validates that the hour is within the acceptable range.
      *
      * @param hour the hour to validate

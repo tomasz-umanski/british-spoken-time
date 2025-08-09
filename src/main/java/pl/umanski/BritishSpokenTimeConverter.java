@@ -7,6 +7,11 @@ import java.util.Map;
  */
 public class BritishSpokenTimeConverter {
 
+    private static final String NOON = "noon";
+    private static final String MIDNIGHT = "midnight";
+    private static final String O_CLOCK = " o'clock";
+    private static final String PAST = " past ";
+
     /**
      * Mapping of hour values to their British English word equivalents.
      */
@@ -25,56 +30,120 @@ public class BritishSpokenTimeConverter {
     );
 
     /**
+     * Mapping of minute values to their British English word equivalents.
+     */
+    private static final Map<Integer, String> MINUTE_WORDS = Map.ofEntries(
+            Map.entry(1, "one"),
+            Map.entry(2, "two"),
+            Map.entry(3, "three"),
+            Map.entry(4, "four"),
+            Map.entry(5, "five"),
+            Map.entry(6, "six"),
+            Map.entry(7, "seven"),
+            Map.entry(8, "eight"),
+            Map.entry(9, "nine"),
+            Map.entry(10, "ten"),
+            Map.entry(11, "eleven"),
+            Map.entry(12, "twelve"),
+            Map.entry(13, "thirteen"),
+            Map.entry(14, "fourteen"),
+            Map.entry(15, "quarter"),
+            Map.entry(16, "sixteen"),
+            Map.entry(17, "seventeen"),
+            Map.entry(18, "eighteen"),
+            Map.entry(19, "nineteen"),
+            Map.entry(20, "twenty"),
+            Map.entry(21, "twenty one"),
+            Map.entry(22, "twenty two"),
+            Map.entry(23, "twenty three"),
+            Map.entry(24, "twenty four"),
+            Map.entry(25, "twenty five"),
+            Map.entry(26, "twenty six"),
+            Map.entry(27, "twenty seven"),
+            Map.entry(28, "twenty eight"),
+            Map.entry(29, "twenty nine"),
+            Map.entry(30, "half")
+    );
+
+    /**
      * Converts a given {@link Time} instance to its British spoken form.
      *
      * @param time the {@link Time} to convert
      * @return the British spoken time representation
-     * @throws IllegalArgumentException if time is null
      */
     public String convert(Time time) {
         if (time == null) {
             throw new IllegalArgumentException("time must not be null");
         }
-
-        return convertExactHour(time);
+        if (time.isExactHour()) {
+            return formatExactHour(time);
+        }
+        if (isPastTime(time)) {
+            return formatPastTime(time);
+        }
+        return "";
     }
 
     /**
-     * Converts an exact hour to its spoken form.
-     *
-     * @param time the {@link Time} to convert
-     * @return the spoken form, e.g. "three o'clock"
+     * Formats an exact hour (minute = 0) to its spoken form.
      */
-    private String convertExactHour(Time time) {
-        if (isNoon(time)) {
-            return "noon";
-        }
-
-        if (isMidnight(time)) {
-            return "midnight";
-        }
-
-        return HOUR_WORDS.get(time.hour()) + " o'clock";
+    private String formatExactHour(Time time) {
+        if (isNoon(time)) return NOON;
+        if (isMidnight(time)) return MIDNIGHT;
+        return getHourWord(time.hour()) + O_CLOCK;
     }
 
     /**
-     * Checks if the given time represents noon (12:00).
-     *
-     * @param time the {@link Time} to check
-     * @return true if the time is noon, false otherwise
+     * Checks if the time falls in the "past" range (minutes 1–30).
+     */
+    private boolean isPastTime(Time time) {
+        return time.minute() >= 1 && time.minute() <= 30;
+    }
+
+    /**
+     * Formats a time in the "past" range (minutes 1–30) to its spoken form.
+     */
+    private String formatPastTime(Time time) {
+        String minuteWord = getMinuteWord(time.minute());
+        String hourWord = getDisplayHourWord(time);
+        return minuteWord + PAST + hourWord;
+    }
+
+    /**
+     * Returns the display hour word, handling special cases for noon and midnight.
+     */
+    private String getDisplayHourWord(Time time) {
+        if (isNoon(time)) return NOON;
+        if (isMidnight(time)) return MIDNIGHT;
+        return getHourWord(time.hour());
+    }
+
+    /**
+     * Returns the spoken word for an hour.
+     */
+    private String getHourWord(int hour) {
+        return HOUR_WORDS.get(hour);
+    }
+
+    /**
+     * Returns the spoken word for a minute.
+     */
+    private String getMinuteWord(int minute) {
+        return MINUTE_WORDS.get(minute);
+    }
+
+    /**
+     * Checks if the given hour represents noon.
      */
     private boolean isNoon(Time time) {
-        return time.hour() == 12 && time.minute() == 0;
+        return time.hour() == 12;
     }
 
     /**
-     * Checks if the given time represents midnight (00:00).
-     *
-     * @param time the {@link Time} to check
-     * @return true if the time is midnight, false otherwise
+     * Checks if the given hour represents midnight.
      */
     private boolean isMidnight(Time time) {
-        return time.hour() == 0 && time.minute() == 0;
+        return time.hour() == 0;
     }
 
 }
