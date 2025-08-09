@@ -138,4 +138,59 @@ class BritishSpokenTimeConverterTest {
 
     }
 
+    @Nested
+    @DisplayName("To hour conversion")
+    class ToHourConversion {
+
+        @Test
+        @DisplayName("Should convert twenty five to eight")
+        void shouldConvertTwentyFiveToEight() {
+            Time time = new Time(7, 35);
+            assertEquals("twenty five to eight", converter.convert(time));
+        }
+
+        @Test
+        @DisplayName("Should convert quarter to four")
+        void shouldConvertQuarterToFour() {
+            Time time = new Time(3, 45);
+            assertEquals("quarter to four", converter.convert(time));
+        }
+
+        @Test
+        @DisplayName("Should convert one to twelve")
+        void shouldConvertOneToTwelve() {
+            Time time = new Time(11, 59);
+            assertEquals("one to twelve", converter.convert(time));
+        }
+
+        @Test
+        @DisplayName("Should convert twenty to one after noon")
+        void shouldConvertTwentyToOneAfterNoon() {
+            Time time = new Time(12, 40);
+            assertEquals("twenty to one", converter.convert(time));
+        }
+
+        @Test
+        @DisplayName("Should convert twenty to one after midnight")
+        void shouldConvertTwentyToOneAfterMidnight() {
+            Time time = new Time(0, 40);
+            assertEquals("twenty to one", converter.convert(time));
+        }
+
+        @ParameterizedTest
+        @CsvSource({
+                "3, 40, twenty to four",
+                "6, 45, quarter to seven",
+                "8, 50, ten to nine",
+                "10, 55, five to eleven"
+        })
+        @DisplayName("Should convert time to 'to' format")
+        void shouldConvertTimeToToFormat(int hour, int minute, String expected) {
+            Time time = new Time(hour, minute);
+            assertEquals(expected, converter.convert(time));
+        }
+
+    }
+
+
 }

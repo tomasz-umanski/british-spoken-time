@@ -11,11 +11,13 @@ public class BritishSpokenTimeConverter {
     private static final String MIDNIGHT = "midnight";
     private static final String O_CLOCK = " o'clock";
     private static final String PAST = " past ";
+    private static final String TO = " to ";
 
     /**
      * Mapping of hour values to their British English word equivalents.
      */
     private static final Map<Integer, String> HOUR_WORDS = Map.ofEntries(
+            Map.entry(0, "twelve"),
             Map.entry(1, "one"),
             Map.entry(2, "two"),
             Map.entry(3, "three"),
@@ -92,7 +94,30 @@ public class BritishSpokenTimeConverter {
         if (isDigitalTime(time)) {
             return formatDigitalTime(time);
         }
+        if (isToTime(time)) {
+            return formatToTime(time);
+        }
         return "";
+    }
+
+    /**
+     * Checks if the time falls in the 'to' range (minutes 40-59 and 35).
+     */
+    private boolean isToTime(Time time) {
+        return time.minute() >= 40 && time.minute() <= 59 || time.minute() == 35;
+    }
+
+    /**
+     * Formats a time in the "to" range (minutes 40-59 and 35)
+     */
+    private String formatToTime(Time time) {
+        int minutesTo = 60 - time.minute();
+        int nextHour = (time.hour() + 1) % 12;
+
+        String minuteWord = getMinuteWord(minutesTo);
+        String nextHourWord = getHourWord(nextHour);
+
+        return minuteWord + TO + nextHourWord;
     }
 
     /**
