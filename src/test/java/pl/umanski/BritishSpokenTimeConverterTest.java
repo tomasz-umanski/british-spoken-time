@@ -115,4 +115,27 @@ class BritishSpokenTimeConverterTest {
 
     }
 
+    @Nested
+    @DisplayName("Digital format conversion")
+    class DigitalFormatConversion {
+
+        @ParameterizedTest
+        @CsvSource({
+                "1, 31, one thirty one",
+                "2, 32, two thirty two",
+                "3, 33, three thirty three",
+                "4, 34, four thirty four",
+                "5, 36, five thirty six",
+                "6, 37, six thirty seven",
+                "7, 38, seven thirty eight",
+                "8, 39, eight thirty nine",
+        })
+        @DisplayName("Should convert time to digital format")
+        void shouldConvertTimeToDigitalFormat(int hour, int minute, String expected) {
+            Time time = new Time(hour, minute);
+            assertEquals(expected, converter.convert(time));
+        }
+
+    }
+
 }

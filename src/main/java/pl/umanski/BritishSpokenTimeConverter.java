@@ -62,7 +62,15 @@ public class BritishSpokenTimeConverter {
             Map.entry(27, "twenty seven"),
             Map.entry(28, "twenty eight"),
             Map.entry(29, "twenty nine"),
-            Map.entry(30, "half")
+            Map.entry(30, "half"),
+            Map.entry(31, "thirty one"),
+            Map.entry(32, "thirty two"),
+            Map.entry(33, "thirty three"),
+            Map.entry(34, "thirty four"),
+            Map.entry(36, "thirty six"),
+            Map.entry(37, "thirty seven"),
+            Map.entry(38, "thirty eight"),
+            Map.entry(39, "thirty nine")
     );
 
     /**
@@ -81,7 +89,26 @@ public class BritishSpokenTimeConverter {
         if (isPastTime(time)) {
             return formatPastTime(time);
         }
+        if (isDigitalTime(time)) {
+            return formatDigitalTime(time);
+        }
         return "";
+    }
+
+    /**
+     * Checks if the time falls in the digital range (minutes 31-39 except 35).
+     */
+    private boolean isDigitalTime(Time time) {
+        return time.minute() >= 31 && time.minute() <= 39 && time.minute() != 35;
+    }
+
+    /**
+     * Formats a time to digital form (minutes 31-39 except 35)
+     */
+    private String formatDigitalTime(Time time) {
+        String minuteWord = getMinuteWord(time.minute());
+        String hourWord = getDisplayHourWord(time);
+        return hourWord + " " + minuteWord;
     }
 
     /**
