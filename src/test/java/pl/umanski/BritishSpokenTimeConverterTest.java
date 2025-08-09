@@ -1,0 +1,69 @@
+package pl.umanski;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+@DisplayName("British spoken time converter Test")
+class BritishSpokenTimeConverterTest {
+
+    private BritishSpokenTimeConverter converter;
+
+    @BeforeEach
+    void setUp() {
+        converter = new BritishSpokenTimeConverter();
+    }
+
+    @Test
+    @DisplayName("Should throw exception when time is null")
+    void shouldThrowExceptionWhenTimeIsNull() {
+        assertThrows(IllegalArgumentException.class, () -> converter.convert(null));
+    }
+
+    @Nested
+    @DisplayName("Exact hour conversion")
+    class ExactHourConversion {
+
+        @Test
+        @DisplayName("Should convert noon")
+        void shouldConvertNoon() {
+            Time time = new Time(12, 0);
+            assertEquals("noon", converter.convert(time));
+        }
+
+        @Test
+        @DisplayName("Should convert midnight")
+        void shouldConvertMidnight() {
+            Time time = new Time(0, 0);
+            assertEquals("midnight", converter.convert(time));
+        }
+
+        @ParameterizedTest
+        @CsvSource({
+                "1, one o'clock",
+                "2, two o'clock",
+                "3, three o'clock",
+                "4, four o'clock",
+                "5, five o'clock",
+                "6, six o'clock",
+                "7, seven o'clock",
+                "8, eight o'clock",
+                "9, nine o'clock",
+                "10, ten o'clock",
+                "11, eleven o'clock"
+        })
+        @DisplayName("Should convert regular hours")
+        void shouldConvertRegularHours(int hour, String expected) {
+            Time time = new Time(hour, 0);
+            assertEquals(expected, converter.convert(time));
+        }
+
+    }
+
+}
