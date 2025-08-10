@@ -28,6 +28,20 @@ public record Time(int hour, int minute) {
     }
 
     /**
+     * Checks if the time represents noon.
+     */
+    public boolean isNoon() {
+        return hour == 12;
+    }
+
+    /**
+     * Checks if the time represents midnight.
+     */
+    public boolean isMidnight() {
+        return hour == 0;
+    }
+
+    /**
      * Validates that the hour is within the acceptable range.
      *
      * @param hour the hour to validate

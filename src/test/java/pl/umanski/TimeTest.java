@@ -153,4 +153,73 @@ class TimeTest {
 
     }
 
+    @Nested
+    @DisplayName("Time properties")
+    class TimeProperties {
+
+        @ParameterizedTest
+        @ValueSource(ints = {0, 1, 3, 6, 9, 11, 12})
+        @DisplayName("Should recognize exact hour for any time with zero minutes")
+        void shouldRecognizeExactHourForAnyTimeWithZeroMinutes(int hour) {
+            Time time = new Time(hour, 0);
+            assertTrue(time.isExactHour());
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = {1, 15, 30, 45, 59})
+        @DisplayName("Should not recognize exact hour for any time with non-zero minutes")
+        void shouldNotRecognizeExactHourForAnyTimeWithNonZeroMinutes(int minute) {
+            Time time = new Time(10, minute);
+            assertFalse(time.isExactHour());
+        }
+
+        @Test
+        @DisplayName("Should recognize noon for hour twelve")
+        void shouldRecognizeNoonForHourTwelve() {
+            Time time = new Time(12, 0);
+            assertTrue(time.isNoon());
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = {1, 15, 30, 45, 59})
+        @DisplayName("Should recognize noon for hour twelve with any minute")
+        void shouldRecognizeNoonForHourTwelveWithAnyMinute(int minute) {
+            Time time = new Time(12, minute);
+            assertTrue(time.isNoon());
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = {0, 1, 2, 6, 9, 11})
+        @DisplayName("Should not recognize noon for any hour other than twelve")
+        void shouldNotRecognizeNoonForAnyHourOtherThanTwelve(int hour) {
+            Time time = new Time(hour, 0);
+            assertFalse(time.isNoon());
+        }
+
+
+        @Test
+        @DisplayName("Should recognize midnight for hour zero")
+        void shouldRecognizeMidnightForHourZero() {
+            Time time = new Time(0, 0);
+            assertTrue(time.isMidnight());
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = {1, 15, 30, 45, 59})
+        @DisplayName("Should recognize midnight for hour zero with any minute")
+        void shouldRecognizeMidnightForHourZeroWithAnyMinute(int minute) {
+            Time time = new Time(0, minute);
+            assertTrue(time.isMidnight());
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = {1, 2, 6, 9, 11, 12})
+        @DisplayName("Should not recognize midnight for any hour other than zero")
+        void shouldNotRecognizeMidnightForAnyHourOtherThanZero(int hour) {
+            Time time = new Time(hour, 30);
+            assertFalse(time.isMidnight());
+        }
+
+    }
+
 }
