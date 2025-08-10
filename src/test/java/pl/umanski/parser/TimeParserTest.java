@@ -41,6 +41,13 @@ class TimeParserTest {
     }
 
     @Test
+    @DisplayName("Should parse input with whitespaces")
+    void shouldParseInputWithWhitespaces() {
+        Time time = TimeParser.parse(" 5:28  ");
+        assertEquals(new Time(5, 28), time);
+    }
+
+    @Test
     @DisplayName("Should parse noon")
     void shouldParseNoon() {
         Time time = TimeParser.parse("12:00");
@@ -48,11 +55,13 @@ class TimeParserTest {
     }
 
     @Test
+    @DisplayName("Should throw exception for null input")
     void shouldThrowExceptionForNullInput() {
         assertThrows(IllegalArgumentException.class, () -> TimeParser.parse(null));
     }
 
     @Test
+    @DisplayName("Should throw exception for empty input")
     void shouldThrowExceptionForEmptyInput() {
         assertThrows(IllegalArgumentException.class, () -> TimeParser.parse(""));
     }
