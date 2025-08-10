@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @DisplayName("British spoken time converter Test")
 class BritishSpokenTimeConverterTest {
 
-    private BritishSpokenTimeConverter converter;
+    private SpokenTimeConverter converter;
 
     @BeforeEach
     void setUp() {
@@ -191,6 +191,5 @@ class BritishSpokenTimeConverterTest {
         }
 
     }
-
 
 }
