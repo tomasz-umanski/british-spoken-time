@@ -1,4 +1,7 @@
-package pl.umanski;
+package pl.umanski.converter;
+
+import pl.umanski.model.Time;
+import pl.umanski.strategy.*;
 
 import java.util.List;
 

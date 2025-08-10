@@ -1,4 +1,6 @@
-package pl.umanski;
+package pl.umanski.parser;
+
+import pl.umanski.model.Time;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

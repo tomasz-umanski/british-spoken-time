@@ -1,6 +1,8 @@
-package pl.umanski;
+package pl.umanski.strategy;
 
-import static pl.umanski.BritishTimeVocabulary.*;
+import pl.umanski.model.Time;
+
+import static pl.umanski.vocabulary.BritishTimeVocabulary.*;
 
 /**
  * Formatter for past times (minutes 1-30).

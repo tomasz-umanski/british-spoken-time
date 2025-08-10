@@ -1,4 +1,6 @@
-package pl.umanski;
+package pl.umanski.vocabulary;
+
+import pl.umanski.model.Time;
 
 import java.util.Map;
 

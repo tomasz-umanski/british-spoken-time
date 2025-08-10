@@ -1,6 +1,8 @@
-package pl.umanski;
+package pl.umanski.strategy;
 
-import static pl.umanski.BritishTimeVocabulary.*;
+import pl.umanski.model.Time;
+
+import static pl.umanski.vocabulary.BritishTimeVocabulary.*;
 
 /**
  * Formatter for 'to' times (minutes 40-60 and 35).

@@ -1,4 +1,4 @@
-package pl.umanski;
+package pl.umanski.model;
 
 /**
  * Represents a time in 12-hour format with hour and minute fields.

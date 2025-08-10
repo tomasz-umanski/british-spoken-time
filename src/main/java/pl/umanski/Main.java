@@ -1,5 +1,10 @@
 package pl.umanski;
 
+import pl.umanski.converter.BritishSpokenTimeConverter;
+import pl.umanski.converter.SpokenTimeConverter;
+import pl.umanski.model.Time;
+import pl.umanski.parser.TimeParser;
+
 import java.util.Scanner;
 
 public class Main {

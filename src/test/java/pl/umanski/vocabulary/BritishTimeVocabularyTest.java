@@ -1,13 +1,14 @@
-package pl.umanski;
+package pl.umanski.vocabulary;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import pl.umanski.model.Time;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static pl.umanski.BritishTimeVocabulary.*;
+import static pl.umanski.vocabulary.BritishTimeVocabulary.*;
 
 @DisplayName("British Time Vocabulary Test")
 class BritishTimeVocabularyTest {

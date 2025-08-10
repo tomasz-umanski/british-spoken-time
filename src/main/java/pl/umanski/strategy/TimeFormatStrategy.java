@@ -1,4 +1,6 @@
-package pl.umanski;
+package pl.umanski.strategy;
+
+import pl.umanski.model.Time;
 
 /**
  * Strategy interface for formatting time in different ways.

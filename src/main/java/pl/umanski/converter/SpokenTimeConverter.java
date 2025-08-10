@@ -1,4 +1,6 @@
-package pl.umanski;
+package pl.umanski.converter;
+
+import pl.umanski.model.Time;
 
 /**
  * Interface for converting {@link Time} objects into their spoken representation
