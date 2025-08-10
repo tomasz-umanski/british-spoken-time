@@ -87,7 +87,6 @@ class BritishTimeVocabularyTest {
         assertEquals("midnight", getDisplayHourWord(time));
     }
 
-
     @ParameterizedTest
     @CsvSource({
             "10, ten",

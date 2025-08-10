@@ -19,7 +19,6 @@ class TimeTest {
         @DisplayName("Should create time for valid hour and minute")
         void shouldCreateTimeForValidHourAndMinute() {
             Time time = new Time(10, 30);
-
             assertEquals(10, time.hour());
             assertEquals(30, time.minute());
         }
@@ -61,7 +60,6 @@ class TimeTest {
         @DisplayName("Should create time for valid minutes")
         void shouldCreateTimeForValidMinutes(int minute) {
             Time time = new Time(10, minute);
-
             assertEquals(10, time.hour());
             assertEquals(minute, time.minute());
         }
@@ -121,7 +119,6 @@ class TimeTest {
         void shouldBeEqualWhenHoursAndMinutesAreSame() {
             Time time1 = new Time(10, 30);
             Time time2 = new Time(10, 30);
-
             assertEquals(time1, time2);
             assertEquals(time1.hashCode(), time2.hashCode());
         }
@@ -131,7 +128,6 @@ class TimeTest {
         void shouldNotBeEqualWhenHourDiffers() {
             Time time1 = new Time(10, 30);
             Time time2 = new Time(11, 30);
-
             assertNotEquals(time1, time2);
         }
 
@@ -140,7 +136,6 @@ class TimeTest {
         void shouldNotBeEqualWhenMinuteDiffers() {
             Time time1 = new Time(10, 30);
             Time time2 = new Time(10, 31);
-
             assertNotEquals(time1, time2);
         }
 
