@@ -58,4 +58,46 @@ class BritishTimeVocabularyTest {
         assertThrows(IllegalArgumentException.class, () -> getMinuteWord(65));
     }
 
+    @Test
+    @DisplayName("Should return noon for 12:00")
+    void shouldReturnNoonForTwelve() {
+        Time time = new Time(12, 0);
+        assertEquals("noon", getDisplayHourWord(time));
+    }
+
+    @Test
+    @DisplayName("Should return noon at different minutes")
+    void shouldReturnNoonAtDifferentMinutes() {
+        Time time = new Time(12, 30);
+        assertEquals("noon", getDisplayHourWord(time));
+    }
+
+    @Test
+    @DisplayName("Should return midnight for 00:00")
+    void shouldReturnMidnightForZero() {
+        Time time = new Time(0, 0);
+        assertEquals("midnight", getDisplayHourWord(time));
+    }
+
+    @Test
+    @DisplayName("Should return midnight at different minutes")
+    void shouldReturnMidnightAtDifferentMinutes() {
+        Time time = new Time(0, 30);
+        assertEquals("midnight", getDisplayHourWord(time));
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({
+            "10, ten",
+            "7, seven",
+            "1, one",
+            "3, three"
+    })
+    @DisplayName("Should return regular hour word for non-special time")
+    void shouldReturnRegularHourWordForNonSpecialTimes(int hour, String expected) {
+        Time time = new Time(hour, 0);
+        assertEquals(expected, getDisplayHourWord(time));
+    }
+
 }

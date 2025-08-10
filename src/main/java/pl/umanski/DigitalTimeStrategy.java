@@ -20,13 +20,4 @@ public class DigitalTimeStrategy implements TimeFormatStrategy {
         return hourWord + " " + minuteWord;
     }
 
-    /**
-     * Returns the display hour word, handling special cases for noon and midnight.
-     */
-    private String getDisplayHourWord(Time time) {
-        if (time.isNoon()) return NOON;
-        if (time.isMidnight()) return MIDNIGHT;
-        return getHourWord(time.hour());
-    }
-
 }

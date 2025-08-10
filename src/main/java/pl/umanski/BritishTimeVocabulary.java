@@ -90,4 +90,16 @@ public class BritishTimeVocabulary {
         return minuteWord;
     }
 
+    /**
+     * Returns the display hour word, handling special cases for noon and midnight.
+     *
+     * @param time the time object
+     * @return the British English word equivalent for the hour including special cases
+     */
+    public static String getDisplayHourWord(Time time) {
+        if (time.isNoon()) return NOON;
+        if (time.isMidnight()) return MIDNIGHT;
+        return getHourWord(time.hour());
+    }
+
 }
