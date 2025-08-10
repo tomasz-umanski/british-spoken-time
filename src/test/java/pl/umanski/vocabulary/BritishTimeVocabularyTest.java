@@ -15,7 +15,6 @@ class BritishTimeVocabularyTest {
 
     @ParameterizedTest
     @CsvSource({
-            "0, twelve",
             "1, one",
             "2, two",
             "11, eleven"
@@ -42,6 +41,7 @@ class BritishTimeVocabularyTest {
     void shouldReturnCorrectSpecialWords() {
         assertEquals("noon", NOON);
         assertEquals("midnight", MIDNIGHT);
+        assertEquals("twelve", TWELVE);
         assertEquals("o'clock", EXACT_HOUR_SUFFIX);
         assertEquals("past", PAST_PREPOSITION);
         assertEquals("to", TO_PREPOSITION);

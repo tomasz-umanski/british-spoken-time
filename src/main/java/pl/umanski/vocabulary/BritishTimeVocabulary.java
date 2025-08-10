@@ -20,6 +20,11 @@ public class BritishTimeVocabulary {
     public static final String MIDNIGHT = "midnight";
 
     /**
+     * British English word for twelve needed for 'to' time translation.
+     */
+    public static final String TWELVE = "twelve";
+
+    /**
      * Suffix used for exact hours in British English.
      */
     public static final String EXACT_HOUR_SUFFIX = "o'clock";
@@ -38,9 +43,9 @@ public class BritishTimeVocabulary {
      * Mapping of hour values to their British English word equivalents.
      */
     private static final Map<Integer, String> HOUR_WORDS = Map.ofEntries(
-            Map.entry(0, "twelve"), Map.entry(1, "one"), Map.entry(2, "two"), Map.entry(3, "three"),
-            Map.entry(4, "four"), Map.entry(5, "five"), Map.entry(6, "six"), Map.entry(7, "seven"),
-            Map.entry(8, "eight"), Map.entry(9, "nine"), Map.entry(10, "ten"), Map.entry(11, "eleven")
+            Map.entry(1, "one"), Map.entry(2, "two"), Map.entry(3, "three"), Map.entry(4, "four"),
+            Map.entry(5, "five"), Map.entry(6, "six"), Map.entry(7, "seven"), Map.entry(8, "eight"),
+            Map.entry(9, "nine"), Map.entry(10, "ten"), Map.entry(11, "eleven")
     );
 
     /**

@@ -21,7 +21,7 @@ public class ToTimeStrategy implements TimeFormatStrategy {
         int nextHour = (time.hour() + 1) % 12;
 
         String minuteWord = getMinuteWord(minutesTo);
-        String nextHourWord = getHourWord(nextHour);
+        String nextHourWord = nextHour == 0 ? TWELVE : getHourWord(nextHour);
 
         return minuteWord + " " + TO_PREPOSITION + " " + nextHourWord;
     }

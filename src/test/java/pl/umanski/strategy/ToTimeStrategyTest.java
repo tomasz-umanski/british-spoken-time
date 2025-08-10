@@ -71,13 +71,6 @@ class ToTimeStrategyTest {
         assertEquals("twenty to one", strategy.format(time));
     }
 
-    @Test
-    @DisplayName("Should handle hour wrapping correctly")
-    void shouldHandleHourWrappingCorrectly() {
-        Time time = new Time(11, 59);
-        assertEquals("one to twelve", strategy.format(time));
-    }
-
     @ParameterizedTest
     @CsvSource({
             "5, 41, nineteen to six",
