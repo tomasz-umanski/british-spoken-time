@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DisplayName("To Time Strategy")
 class ToTimeStrategyTest {
 
-    private ToTimeStrategy strategy;
+    private TimeFormatStrategy strategy;
 
     @BeforeEach
     void setUp() {

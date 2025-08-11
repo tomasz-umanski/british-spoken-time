@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DisplayName("Past Time Strategy")
 class PastTimeStrategyTest {
 
-    private PastTimeStrategy strategy;
+    private TimeFormatStrategy strategy;
 
     @BeforeEach
     void setUp() {
