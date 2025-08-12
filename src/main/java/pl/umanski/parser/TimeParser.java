@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 
 /**
  * Parses strings representing time in {@code HH:MM} or {@code H:MM} format into {@link Time} objects.
- * Hours must be between 0 and 12, and minutes between 0 and 59.
  */
 public class TimeParser {
 

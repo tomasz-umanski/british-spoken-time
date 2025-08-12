@@ -55,6 +55,13 @@ class TimeParserTest {
     }
 
     @Test
+    @DisplayName("Should parse time in 24-hour format")
+    void shouldParseTimeIn24HourFormat() {
+        Time time = TimeParser.parse("19:30");
+        assertEquals(new Time(19, 30), time);
+    }
+
+    @Test
     @DisplayName("Should throw exception for null input")
     void shouldThrowExceptionForNullInput() {
         assertThrows(IllegalArgumentException.class, () -> TimeParser.parse(null));
