@@ -33,7 +33,7 @@ public class BritishSpokenTimeConverter implements SpokenTimeConverter {
      */
     public String convert(Time time) {
         if (time == null) {
-            throw new IllegalArgumentException("time must not be null");
+            throw new IllegalArgumentException("Time cannot be null");
         }
 
         return strategies.stream()

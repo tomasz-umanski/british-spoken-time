@@ -22,12 +22,11 @@ class ExactHourStrategyTest {
     @ParameterizedTest
     @CsvSource({
             "0, 0, true",
-            "12, 0, true",
-            "5, 0, true",
-            "5, 15, false",
-            "0, 1, false"
+            "16, 0, true",
+            "4, 25, false",
+            "23, 15, false",
     })
-    @DisplayName("Should correctly identify exact hours")
+    @DisplayName("Should correctly identify 'exact' hours")
     void shouldCorrectlyIdentifyExactHours(int hour, int minute, boolean expected) {
         Time time = new Time(hour, minute);
         assertEquals(expected, strategy.canHandle(time));
@@ -49,13 +48,13 @@ class ExactHourStrategyTest {
 
     @ParameterizedTest
     @CsvSource({
-            "1, one o'clock",
-            "3, three o'clock",
-            "5, five o'clock",
-            "8, eight o'clock",
+            "1, one o'clock AM",
+            "3, three o'clock AM",
+            "17, five o'clock PM",
+            "20, eight o'clock PM",
     })
-    @DisplayName("Should format regular hours correctly")
-    void shouldFormatRegularHoursCorrectly(int hour, String expected) {
+    @DisplayName("Should format regular 'exact' hours with correct suffix")
+    void shouldFormatRegularExactHoursWithCorrectSuffix(int hour, String expected) {
         Time time = new Time(hour, 0);
         assertEquals(expected, strategy.format(time));
     }

@@ -9,7 +9,7 @@ import pl.umanski.model.Time;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@DisplayName("Digital Time Strategy")
+@DisplayName("Digital Time Strategy Test")
 class DigitalTimeStrategyTest {
 
     private TimeFormatStrategy strategy;
@@ -22,44 +22,40 @@ class DigitalTimeStrategyTest {
     @ParameterizedTest
     @CsvSource({
             "5, 31, true",
-            "5, 32, true",
-            "5, 39, true",
-            "5, 15, false",
-            "5, 35, false",
-            "5, 30, false",
-            "5, 40, false"
+            "15, 39, true",
+            "1, 15, false",
+            "21, 35, false",
+            "23, 48, false"
     })
-    @DisplayName("Should correctly identify digital times")
+    @DisplayName("Should correctly identify 'digital' times")
     void shouldCorrectlyIdentifyDigitalTimes(int hour, int minute, boolean expected) {
         Time time = new Time(hour, minute);
         assertEquals(expected, strategy.canHandle(time));
     }
 
     @Test
-    @DisplayName("Should format digital noon time")
-    void shouldFormatDigitalNoonCorrectly() {
+    @DisplayName("Should format noon thirty nine")
+    void shouldFormatNoonThirtyNine() {
         Time time = new Time(12, 39);
         assertEquals("noon thirty nine", strategy.format(time));
     }
 
     @Test
-    @DisplayName("Should format digital midnight time")
-    void shouldFormatDigitalMidnightCorrectly() {
+    @DisplayName("Should format midnight thirty four")
+    void shouldFormatMidnightThirtyFour() {
         Time time = new Time(0, 34);
         assertEquals("midnight thirty four", strategy.format(time));
     }
 
     @ParameterizedTest
     @CsvSource({
-            "3, 31, three thirty one",
-            "7, 32, seven thirty two",
-            "3, 33, three thirty three",
-            "1, 36, one thirty six",
-            "2, 37, two thirty seven",
-            "11, 38, eleven thirty eight",
+            "7, 32, seven thirty two AM",
+            "3, 33, three thirty three AM",
+            "16, 36, four thirty six PM",
+            "22, 37, ten thirty seven PM",
     })
-    @DisplayName("Should format digital times correctly")
-    void shouldFormatDigitalTimesCorrectly(int hour, int minute, String expected) {
+    @DisplayName("Should format 'digital' times with correct suffix")
+    void shouldFormatDigitalTimesWithCorrectSuffix(int hour, int minute, String expected) {
         Time time = new Time(hour, minute);
         assertEquals(expected, strategy.format(time));
     }

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import pl.umanski.model.Time;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -15,13 +15,14 @@ class BritishTimeVocabularyTest {
 
     @ParameterizedTest
     @CsvSource({
-            "1, one",
             "2, two",
-            "11, eleven"
+            "6, six",
+            "14, two",
+            "23, eleven"
     })
-    @DisplayName("Should return correct hour words")
-    void shouldReturnCorrectHourWords(int hour, String expected) {
-        assertEquals(expected, getHourWord(hour));
+    @DisplayName("Should return correct hour words in 12-hour format")
+    void shouldReturnCorrectHourWordsIn12HourFormat(int hour, String expected) {
+        assertEquals(expected, getTwelveHourFormatWord(hour));
     }
 
     @ParameterizedTest
@@ -41,16 +42,18 @@ class BritishTimeVocabularyTest {
     void shouldReturnCorrectSpecialWords() {
         assertEquals("noon", NOON);
         assertEquals("midnight", MIDNIGHT);
-        assertEquals("twelve", TWELVE);
         assertEquals("o'clock", EXACT_HOUR_SUFFIX);
         assertEquals("past", PAST_PREPOSITION);
         assertEquals("to", TO_PREPOSITION);
+        assertEquals("AM", AM);
+        assertEquals("PM", PM);
     }
 
-    @Test
-    @DisplayName("Should throw exception for not defined hour")
-    void shouldThrowExceptionForNotDefinedHour() {
-        assertThrows(IllegalArgumentException.class, () -> getHourWord(23));
+    @ParameterizedTest
+    @ValueSource(ints = {-5, 0, 12, 24})
+    @DisplayName("Should throw exception for not defined hours")
+    void shouldThrowExceptionForNotDefinedHours(int hour) {
+        assertThrows(IllegalArgumentException.class, () -> getTwelveHourFormatWord(hour));
     }
 
     @Test
@@ -59,45 +62,25 @@ class BritishTimeVocabularyTest {
         assertThrows(IllegalArgumentException.class, () -> getMinuteWord(65));
     }
 
-    @Test
-    @DisplayName("Should return noon for 12:00")
-    void shouldReturnNoonForTwelve() {
-        Time time = new Time(12, 0);
-        assertEquals("noon", getDisplayHourWord(time));
-    }
-
-    @Test
-    @DisplayName("Should return noon at different minutes")
-    void shouldReturnNoonAtDifferentMinutes() {
-        Time time = new Time(12, 30);
-        assertEquals("noon", getDisplayHourWord(time));
-    }
-
-    @Test
-    @DisplayName("Should return midnight for 00:00")
-    void shouldReturnMidnightForZero() {
-        Time time = new Time(0, 0);
-        assertEquals("midnight", getDisplayHourWord(time));
-    }
-
-    @Test
-    @DisplayName("Should return midnight at different minutes")
-    void shouldReturnMidnightAtDifferentMinutes() {
-        Time time = new Time(0, 30);
-        assertEquals("midnight", getDisplayHourWord(time));
+    @ParameterizedTest
+    @CsvSource({
+            "0, AM",
+            "1, AM",
+            "7, AM",
+            "12, PM",
+            "14, PM",
+            "23, PM"
+    })
+    @DisplayName("Should determine period based on hour")
+    void shouldDeterminePeriodBasedOnHour(int hour, String expected) {
+        assertEquals(expected, getPeriod(hour));
     }
 
     @ParameterizedTest
-    @CsvSource({
-            "10, ten",
-            "7, seven",
-            "1, one",
-            "3, three"
-    })
-    @DisplayName("Should return regular hour word for non-special time")
-    void shouldReturnRegularHourWordForNonSpecialTimes(int hour, String expected) {
-        Time time = new Time(hour, 0);
-        assertEquals(expected, getDisplayHourWord(time));
+    @ValueSource(ints = {-5, 100})
+    @DisplayName("Should throw exception for hour out of period range")
+    void shouldThrowExceptionForHourOutOfPeriodRange(int hour) {
+        assertThrows(IllegalArgumentException.class, () -> getPeriod(hour));
     }
 
 }

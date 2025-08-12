@@ -7,6 +7,7 @@ import static pl.umanski.vocabulary.BritishTimeVocabulary.*;
 /**
  * Formatter for 'to' times (minutes 40-60 and 35).
  * Uses "to" format like "twenty five to five" or "five to ten".
+ * Adds AM/PM period suffix for regular hours.
  */
 public class ToTimeStrategy implements TimeFormatStrategy {
 
@@ -17,13 +18,17 @@ public class ToTimeStrategy implements TimeFormatStrategy {
 
     @Override
     public String format(Time time) {
+        int nextHour = time.hour() + 1;
         int minutesTo = 60 - time.minute();
-        int nextHour = (time.hour() + 1) % 12;
-
         String minuteWord = getMinuteWord(minutesTo);
-        String nextHourWord = nextHour == 0 ? TWELVE : getHourWord(nextHour);
 
-        return minuteWord + " " + TO_PREPOSITION + " " + nextHourWord;
+        if (nextHour == 12) return minuteWord + " " + TO_PREPOSITION + " " + NOON;
+        if (nextHour == 24) return minuteWord + " " + TO_PREPOSITION + " " + MIDNIGHT;
+
+        String hourWord = getTwelveHourFormatWord(nextHour);
+        String period = getPeriod(nextHour);
+
+        return minuteWord + " " + TO_PREPOSITION + " " + hourWord + " " + period;
     }
 
 }

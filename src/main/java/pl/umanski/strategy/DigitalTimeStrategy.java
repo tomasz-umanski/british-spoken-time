@@ -7,6 +7,7 @@ import static pl.umanski.vocabulary.BritishTimeVocabulary.*;
 /**
  * Formatter for digital times (minutes 31-39 exclude 35).
  * Uses "digital" format like "one thirty six".
+ * Adds AM/PM period suffix for regular hours.
  */
 public class DigitalTimeStrategy implements TimeFormatStrategy {
 
@@ -18,8 +19,14 @@ public class DigitalTimeStrategy implements TimeFormatStrategy {
     @Override
     public String format(Time time) {
         String minuteWord = getMinuteWord(time.minute());
-        String hourWord = getDisplayHourWord(time);
-        return hourWord + " " + minuteWord;
+
+        if (time.isNoon()) return NOON + " " + minuteWord;
+        if (time.isMidnight()) return MIDNIGHT + " " + minuteWord;
+
+        String hourWord = getTwelveHourFormatWord(time.hour());
+        String period = getPeriod(time.hour());
+
+        return hourWord + " " + minuteWord + " " + period;
     }
 
 }

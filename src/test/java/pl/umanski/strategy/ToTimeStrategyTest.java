@@ -22,66 +22,67 @@ class ToTimeStrategyTest {
     @ParameterizedTest
     @CsvSource({
             "5, 35, true",
-            "5, 40, true",
-            "5, 48, true",
-            "5, 59, true",
-            "5, 15, false",
-            "5, 30, false",
-            "5, 31, false",
-            "5, 39, false"
+            "15, 59, true",
+            "6, 15, false",
+            "23, 39, false"
     })
-    @DisplayName("Should correctly identify to times")
+    @DisplayName("Should correctly identify 'to' times")
     void shouldCorrectlyIdentifyToTimes(int hour, int minute, boolean expected) {
         Time time = new Time(hour, minute);
         assertEquals(expected, strategy.canHandle(time));
     }
 
     @Test
-    @DisplayName("Should format twenty five to three")
-    void shouldFormatTwentyFiveToEight() {
+    @DisplayName("Should format twenty five to three AM")
+    void shouldFormatTwentyFiveToThreeAM() {
         Time time = new Time(2, 35);
-        assertEquals("twenty five to three", strategy.format(time));
+        assertEquals("twenty five to three AM", strategy.format(time));
     }
 
     @Test
-    @DisplayName("Should format quarter to eleven")
-    void shouldFormatQuarterToFour() {
-        Time time = new Time(10, 45);
-        assertEquals("quarter to eleven", strategy.format(time));
+    @DisplayName("Should format quarter to eleven PM")
+    void shouldFormatQuarterToElevenPM() {
+        Time time = new Time(22, 45);
+        assertEquals("quarter to eleven PM", strategy.format(time));
     }
 
     @Test
-    @DisplayName("Should convert one to twelve")
-    void shouldFormatOneToTwelve() {
+    @DisplayName("Should format one to noon")
+    void shouldFormatOneToNoon() {
         Time time = new Time(11, 59);
-        assertEquals("one to twelve", strategy.format(time));
+        assertEquals("one to noon", strategy.format(time));
     }
 
     @Test
-    @DisplayName("Should format twenty to one after noon")
-    void shouldFormatTwentyToOneAfterNoon() {
+    @DisplayName("Should format one to midnight")
+    void shouldFormatOneToMidnight() {
+        Time time = new Time(23, 59);
+        assertEquals("one to midnight", strategy.format(time));
+    }
+
+    @Test
+    @DisplayName("Should format twenty to one PM after noon")
+    void shouldFormatTwentyToOnePMAfterNoon() {
         Time time = new Time(12, 40);
-        assertEquals("twenty to one", strategy.format(time));
+        assertEquals("twenty to one PM", strategy.format(time));
     }
 
     @Test
-    @DisplayName("Should format twenty to one after midnight")
-    void shouldFormatTwentyToOneAfterMidnight() {
+    @DisplayName("Should format twenty to one AM after midnight")
+    void shouldFormatTwentyToOneAMAfterMidnight() {
         Time time = new Time(0, 40);
-        assertEquals("twenty to one", strategy.format(time));
+        assertEquals("twenty to one AM", strategy.format(time));
     }
 
     @ParameterizedTest
     @CsvSource({
-            "5, 41, nineteen to six",
-            "7, 58, two to eight",
-            "3, 47, thirteen to four",
-            "1, 44, sixteen to two",
-            "2, 51, nine to three",
-            "10, 55, five to eleven",
+            "7, 58, two to eight AM",
+            "3, 47, thirteen to four AM",
+            "21, 51, nine to ten PM",
+            "22, 55, five to eleven PM",
     })
-    @DisplayName("Should format 'to' times correctly")
-    void shouldFormatToTimesCorrectly(int hour, int minute, String expected) {
+    @DisplayName("Should format 'to' times with correct suffix")
+    void shouldFormatToTimesWithCorrectSuffix(int hour, int minute, String expected) {
         Time time = new Time(hour, minute);
         assertEquals(expected, strategy.format(time));
     }

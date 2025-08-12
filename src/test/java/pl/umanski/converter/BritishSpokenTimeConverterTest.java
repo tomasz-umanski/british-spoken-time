@@ -11,7 +11,7 @@ import pl.umanski.model.Time;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@DisplayName("British spoken time converter Test")
+@DisplayName("British Spoken Time Converter Test")
 class BritishSpokenTimeConverterTest {
 
     private SpokenTimeConverter converter;
@@ -47,20 +47,13 @@ class BritishSpokenTimeConverterTest {
 
         @ParameterizedTest
         @CsvSource({
-                "1, one o'clock",
-                "2, two o'clock",
-                "3, three o'clock",
-                "4, four o'clock",
-                "5, five o'clock",
-                "6, six o'clock",
-                "7, seven o'clock",
-                "8, eight o'clock",
-                "9, nine o'clock",
-                "10, ten o'clock",
-                "11, eleven o'clock"
+                "4, four o'clock AM",
+                "11, eleven o'clock AM",
+                "19, seven o'clock PM",
+                "23, eleven o'clock PM"
         })
-        @DisplayName("Should convert regular hours")
-        void shouldConvertRegularHours(int hour, String expected) {
+        @DisplayName("Should convert regular hours with correct suffix")
+        void shouldConvertRegularHoursWithCorrectSuffix(int hour, String expected) {
             Time time = new Time(hour, 0);
             assertEquals(expected, converter.convert(time));
         }
@@ -72,17 +65,17 @@ class BritishSpokenTimeConverterTest {
     class PastHourConversion {
 
         @Test
-        @DisplayName("Should convert quarter past four")
-        void shouldConvertQuarterPastFour() {
+        @DisplayName("Should convert quarter past four AM")
+        void shouldConvertQuarterPastFourAM() {
             Time time = new Time(4, 15);
-            assertEquals("quarter past four", converter.convert(time));
+            assertEquals("quarter past four AM", converter.convert(time));
         }
 
         @Test
-        @DisplayName("Should convert half past seven")
-        void shouldConvertHalfPastSeven() {
+        @DisplayName("Should convert half past seven AM")
+        void shouldConvertHalfPastSevenAM() {
             Time time = new Time(7, 30);
-            assertEquals("half past seven", converter.convert(time));
+            assertEquals("half past seven AM", converter.convert(time));
         }
 
         @Test
@@ -101,15 +94,13 @@ class BritishSpokenTimeConverterTest {
 
         @ParameterizedTest
         @CsvSource({
-                "1, 3, three past one",
-                "2, 5, five past two",
-                "3, 10, ten past three",
-                "5, 20, twenty past five",
-                "6, 25, twenty five past six",
-                "7, 29, twenty nine past seven",
+                "2, 5, five past two AM",
+                "7, 29, twenty nine past seven AM",
+                "17, 8, eight past five PM",
+                "21, 14, fourteen past nine PM",
         })
-        @DisplayName("Should convert time to past format")
-        void shouldConvertTimeToPastFormat(int hour, int minute, String expected) {
+        @DisplayName("Should convert time to past format with correct suffix")
+        void shouldConvertTimeToPastFormatWithCorrectSuffix(int hour, int minute, String expected) {
             Time time = new Time(hour, minute);
             assertEquals(expected, converter.convert(time));
         }
@@ -122,17 +113,13 @@ class BritishSpokenTimeConverterTest {
 
         @ParameterizedTest
         @CsvSource({
-                "1, 31, one thirty one",
-                "2, 32, two thirty two",
-                "3, 33, three thirty three",
-                "4, 34, four thirty four",
-                "5, 36, five thirty six",
-                "6, 37, six thirty seven",
-                "7, 38, seven thirty eight",
-                "8, 39, eight thirty nine",
+                "2, 32, two thirty two AM",
+                "7, 38, seven thirty eight AM",
+                "13, 36, one thirty six PM",
+                "23, 31, eleven thirty one PM",
         })
-        @DisplayName("Should convert time to digital format")
-        void shouldConvertTimeToDigitalFormat(int hour, int minute, String expected) {
+        @DisplayName("Should convert time to digital format with correct suffix")
+        void shouldConvertTimeToDigitalFormatWithCorrectSuffix(int hour, int minute, String expected) {
             Time time = new Time(hour, minute);
             assertEquals(expected, converter.convert(time));
         }
@@ -144,49 +131,56 @@ class BritishSpokenTimeConverterTest {
     class ToHourConversion {
 
         @Test
-        @DisplayName("Should convert twenty five to eight")
-        void shouldConvertTwentyFiveToEight() {
+        @DisplayName("Should convert twenty five to eight AM")
+        void shouldConvertTwentyFiveToEightAM() {
             Time time = new Time(7, 35);
-            assertEquals("twenty five to eight", converter.convert(time));
+            assertEquals("twenty five to eight AM", converter.convert(time));
         }
 
         @Test
-        @DisplayName("Should convert quarter to four")
-        void shouldConvertQuarterToFour() {
-            Time time = new Time(3, 45);
-            assertEquals("quarter to four", converter.convert(time));
+        @DisplayName("Should convert quarter to four PM")
+        void shouldConvertQuarterToFourPM() {
+            Time time = new Time(15, 45);
+            assertEquals("quarter to four PM", converter.convert(time));
         }
 
         @Test
-        @DisplayName("Should convert one to twelve")
-        void shouldConvertOneToTwelve() {
+        @DisplayName("Should convert one to noon")
+        void shouldConvertOneToNoon() {
             Time time = new Time(11, 59);
-            assertEquals("one to twelve", converter.convert(time));
+            assertEquals("one to noon", converter.convert(time));
         }
 
         @Test
-        @DisplayName("Should convert twenty to one after noon")
-        void shouldConvertTwentyToOneAfterNoon() {
+        @DisplayName("Should convert one to midnight")
+        void shouldConvertOneToMidnight() {
+            Time time = new Time(23, 59);
+            assertEquals("one to midnight", converter.convert(time));
+        }
+
+        @Test
+        @DisplayName("Should convert twenty to one PM")
+        void shouldConvertTwentyToOnePMAfterNoon() {
             Time time = new Time(12, 40);
-            assertEquals("twenty to one", converter.convert(time));
+            assertEquals("twenty to one PM", converter.convert(time));
         }
 
         @Test
-        @DisplayName("Should convert twenty to one after midnight")
-        void shouldConvertTwentyToOneAfterMidnight() {
+        @DisplayName("Should convert twenty to one AM")
+        void shouldConvertTwentyToOneAMAfterMidnight() {
             Time time = new Time(0, 40);
-            assertEquals("twenty to one", converter.convert(time));
+            assertEquals("twenty to one AM", converter.convert(time));
         }
 
         @ParameterizedTest
         @CsvSource({
-                "3, 40, twenty to four",
-                "6, 45, quarter to seven",
-                "8, 50, ten to nine",
-                "10, 55, five to eleven"
+                "3, 40, twenty to four AM",
+                "8, 50, ten to nine AM",
+                "19, 48, twelve to eight PM",
+                "22, 55, five to eleven PM"
         })
-        @DisplayName("Should convert time to 'to' format")
-        void shouldConvertTimeToToFormat(int hour, int minute, String expected) {
+        @DisplayName("Should convert time to 'to' format with correct suffix")
+        void shouldConvertTimeToToFormatWithCorrectSuffix(int hour, int minute, String expected) {
             Time time = new Time(hour, minute);
             assertEquals(expected, converter.convert(time));
         }
