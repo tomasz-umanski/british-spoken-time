@@ -4,6 +4,10 @@
 
 Converts digital time in 12-hour format (both HH:MM and H:MM) to spoken British English.
 
+The application supports two modes of operation:
+- **Command-line arguments**: Pass the time directly as an argument for quick conversion
+- **Interactive mode**: Run without arguments to enter times interactively through prompts
+
 ### Examples
 
 - Input: "1:00" → Output: "one o'clock"
@@ -60,14 +64,27 @@ mvn test
 From the project root directory, run:
 
 ```bash
+# Interactive mode
 mvn exec:java -Dexec.mainClass="pl.umanski.Main"
+
+# With command line arguments
+mvn exec:java -Dexec.mainClass="pl.umanski.Main" -Dexec.args="4:30"
+mvn exec:java -Dexec.mainClass="pl.umanski.Main" -Dexec.args="3:00 07:30 11:45"
 ```
 
-### With jar
+### With JAR
 
-From the project root directory, run:
-
+First from the project root directory, build the JAR file:
 ```bash
 mvn clean package
+```
+
+Then run with:
+```bash
+# Interactive mode (prompts for input)
 java -jar target/british-spoken-time-1.0-SNAPSHOT.jar
+
+# With command line arguments
+java -jar target/british-spoken-time-1.0-SNAPSHOT.jar "4:30"
+java -jar target/british-spoken-time-1.0-SNAPSHOT.jar "3:00" "07:30" "11:45"
 ```
