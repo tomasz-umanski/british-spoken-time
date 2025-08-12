@@ -1,10 +1,10 @@
 package pl.umanski.model;
 
 /**
- * Represents a time in 12-hour format with hour and minute fields.
+ * Represents a time in 24-hour format with hour and minute fields.
  * This record provides immutable time representation with built-in validation.
  *
- * @param hour   the hour field (0-12)
+ * @param hour   the hour field (0-23)
  * @param minute the minute field (0-59)
  */
 public record Time(int hour, int minute) {
@@ -12,7 +12,7 @@ public record Time(int hour, int minute) {
     /**
      * Constructor that validates the provided hour and minute values.
      *
-     * @throws IllegalArgumentException if hour is not between 0 and 12 (inclusive)
+     * @throws IllegalArgumentException if hour is not between 0 and 23 (inclusive)
      * @throws IllegalArgumentException if minute is not between 0 and 59 (inclusive)
      */
     public Time {
@@ -45,11 +45,11 @@ public record Time(int hour, int minute) {
      * Validates that the hour is within the acceptable range.
      *
      * @param hour the hour to validate
-     * @throws IllegalArgumentException if hour is not between 0 and 12 (inclusive)
+     * @throws IllegalArgumentException if hour is not between 0 and 23 (inclusive)
      */
     private static void validateHour(int hour) {
-        if (hour < 0 || hour > 12) {
-            throw new IllegalArgumentException("Hour must be between 0 and 12, got: " + hour);
+        if (hour < 0 || hour > 23) {
+            throw new IllegalArgumentException("Hour must be between 0 and 23, got: " + hour);
         }
     }
 
