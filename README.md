@@ -1,20 +1,51 @@
 # British Spoken Time Converter
 
-## Overview
+A Java application that converts time from 24-hour format (both HH:MM and H:MM) to spoken British English.
 
-Converts digital time in 12-hour format (both HH:MM and H:MM) to spoken British English.
+---
 
-The application supports two modes of operation:
-- **Command-line arguments**: Pass the time directly as an argument for quick conversion
-- **Interactive mode**: Run without arguments to enter times interactively through prompts
+## Features (Assumptions)
 
-### Examples
+### Processing
 
-- Input: "1:00" → Output: "one o'clock"
-- Input: "12:00" → Output: "noon"
-- Input: "7:30" → Output: "half past seven"
-- Input: "9:45" → Output: "quarter to ten"
-- Input: "6:32" → Output: "six thirty two"
+- **Interactive CLI Mode**: Prompts for entering times
+- **Command-Line Arguments**: Batch processing of multiple times
+- **24-Hour Time Format**: Accepts 24-hour format as `HH:MM` or `H:MM` (e.g., `09:30` or `9:30`)
+
+### British Conversion Rules
+
+#### AM/PM indicators
+
+- Automatically added based on 24-hour input (e.g., `07:30` - `AM`, `19:30` - `PM`)
+
+#### Exact Hours
+
+- Exact hour times include period indicators:
+- `1:00` - `one o'clock AM`
+
+#### Minutes 1-30 ("Past" Format)
+
+- Uses "past" construction for the first half-hour:
+- `7:15` - `quarter past seven AM`
+
+#### Minutes 31-39 ("Digital" Format)
+
+- Spoken as digits (excludes 35 minutes):
+- `6:32` - `six thirty two AM`
+
+#### Minutes 35, 40-59 ("To" Format)
+
+- Uses "to" construction referencing the next hour:
+- `7:35` - `twenty five to eight AM`
+
+#### Special Time Phrases
+
+- **Quarter Times**: 15 and 45 minutes use `quarter past/to`
+- **Half Hour**: 30 minutes use `half past`
+- **Noon**: 12:00 converts to `noon` (no AM/PM indicator)
+- **Midnight**: 00:00 converts to `midnight` (no AM/PM indicator)
+
+---
 
 ## Prerequisites
 
@@ -39,52 +70,91 @@ mvn -v
 
 If Maven is not installed, refer to [Maven Installation Guide](https://maven.apache.org/install.html).
 
+---
+
+## Quick Start
+
+1. Clone and build:
+   ```bash
+   git clone git@github.com:tomasz-umanski/british-spoken-time.git
+   cd british-spoken-time
+   mvn clean package
+   ```
+2. This will create `british-spoken-time-1.0-SNAPSHOT.jar` in the `target` directory of a project, that can be run with:
+   ```bash
+   # Interactive mode
+   java -jar target/british-spoken-time-1.0-SNAPSHOT.jar
+   
+   # Command line arguments
+   java -jar target/british-spoken-time-1.0-SNAPSHOT.jar "3:00" "07:30" "11:45"
+   ```
+
+---
+
 ## Building the Project
 
-From the project root directory, run:
+From the project root directory:
+
+### Compile source code
 
 ```bash
 mvn clean compile
 ```
 
-## Running tests
+### Build executable JAR
 
-From the project root directory, run:
+```bash
+mvn clean package
+```
 
-### Run all tests
+Creates `target/british-spoken-time-1.0-SNAPSHOT.jar`
+
+### Run tests
 
 ```bash
 mvn test
 ```
 
-## Running the Application
+---
 
-### With maven
+## Usage
 
-From the project root directory, run:
+From the project root directory:
+
+### Method 1: JAR File
+
+```bash
+# Interactive mode
+java -jar target/british-spoken-time-1.0-SNAPSHOT.jar
+
+# Single time conversion
+java -jar target/british-spoken-time-1.0-SNAPSHOT.jar "14:30"
+
+# Multiple time conversions
+java -jar target/british-spoken-time-1.0-SNAPSHOT.jar "9:00" "12:15" "17:45"
+```
+
+### Method 2: Maven Execution
 
 ```bash
 # Interactive mode
 mvn exec:java -Dexec.mainClass="pl.umanski.Main"
 
-# With command line arguments
-mvn exec:java -Dexec.mainClass="pl.umanski.Main" -Dexec.args="4:30"
-mvn exec:java -Dexec.mainClass="pl.umanski.Main" -Dexec.args="3:00 07:30 11:45"
+# Single time conversion
+mvn exec:java -Dexec.mainClass="pl.umanski.Main" -Dexec.args="14:30"
+
+# Multiple time conversions
+mvn exec:java -Dexec.mainClass="pl.umanski.Main" -Dexec.args="9:00 12:15 17:45"
 ```
 
-### With JAR
+---
 
-First from the project root directory, build the JAR file:
-```bash
-mvn clean package
-```
+## Example Conversions
 
-Then run with:
-```bash
-# Interactive mode (prompts for input)
-java -jar target/british-spoken-time-1.0-SNAPSHOT.jar
-
-# With command line arguments
-java -jar target/british-spoken-time-1.0-SNAPSHOT.jar "4:30"
-java -jar target/british-spoken-time-1.0-SNAPSHOT.jar "3:00" "07:30" "11:45"
-```
+| Input | Output                |
+|-------|-----------------------|
+| 09:00 | nine o'clock AM       |
+| 19:15 | quarter past seven PM |
+| 14:30 | half past two PM      |
+| 12:00 | noon                  |
+| 00:00 | midnight              |
