@@ -2,12 +2,17 @@ package pl.umanski.converter;
 
 import pl.umanski.model.Time;
 import pl.umanski.strategy.*;
+import pl.umanski.strategy.british.DigitalTimeStrategy;
+import pl.umanski.strategy.british.ExactHourStrategy;
+import pl.umanski.strategy.british.PastTimeStrategy;
+import pl.umanski.strategy.british.ToTimeStrategy;
 
 import java.util.List;
 
 /**
  * Converts {@link Time} objects into their British spoken representation.
  */
+@Deprecated
 public class BritishSpokenTimeConverter implements SpokenTimeConverter {
 
     private final List<TimeFormatStrategy> strategies;
