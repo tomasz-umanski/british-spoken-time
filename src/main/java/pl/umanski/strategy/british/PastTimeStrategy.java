@@ -1,6 +1,7 @@
-package pl.umanski.strategy;
+package pl.umanski.strategy.british;
 
 import pl.umanski.model.Time;
+import pl.umanski.strategy.TimeFormatStrategy;
 
 import static pl.umanski.vocabulary.BritishTimeVocabulary.*;
 
