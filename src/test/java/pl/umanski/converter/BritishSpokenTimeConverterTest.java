@@ -18,7 +18,7 @@ class BritishSpokenTimeConverterTest {
 
     @BeforeEach
     void setUp() {
-        converter = new BritishSpokenTimeConverter();
+        converter = TimeConverterFactory.createBritishEnglishConverter();
     }
 
     @Test

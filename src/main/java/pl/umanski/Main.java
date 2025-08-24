@@ -1,7 +1,7 @@
 package pl.umanski;
 
-import pl.umanski.converter.BritishSpokenTimeConverter;
 import pl.umanski.converter.SpokenTimeConverter;
+import pl.umanski.converter.TimeConverterFactory;
 import pl.umanski.model.Time;
 import pl.umanski.parser.TimeParser;
 
@@ -20,7 +20,7 @@ public class Main {
      *             If no arguments provided, starts interactive mode.
      */
     public static void main(String[] args) {
-        SpokenTimeConverter converter = new BritishSpokenTimeConverter();
+        SpokenTimeConverter converter = TimeConverterFactory.createBritishEnglishConverter();
 
         if (args.length > 0) {
             processCommandLineArguments(args, converter);
