@@ -47,7 +47,7 @@ public record Time(int hour, int minute) {
      * @param hour the hour to validate
      * @throws IllegalArgumentException if hour is not between 0 and 23 (inclusive)
      */
-    private static void validateHour(int hour) {
+    private void validateHour(int hour) {
         if (hour < 0 || hour > 23) {
             throw new IllegalArgumentException("Hour must be between 0 and 23, got: " + hour);
         }
@@ -59,7 +59,7 @@ public record Time(int hour, int minute) {
      * @param minute the minute to validate
      * @throws IllegalArgumentException if minute is not between 0 and 59 (inclusive)
      */
-    private static void validateMinute(int minute) {
+    private void validateMinute(int minute) {
         if (minute < 0 || minute > 59) {
             throw new IllegalArgumentException("Minute must be between 0 and 59, got: " + minute);
         }
